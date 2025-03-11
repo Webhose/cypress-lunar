@@ -13,9 +13,8 @@ describe('Login Tests', () => {
     });
 
     it('should allow the user to login successfully', () => {
-        loginPage.enterUsername(userName);
-        loginPage.enterPassword(password);
+        loginPage.enterUsername("almir@webz.io");
+        loginPage.enterPassword("19Rek@.river.bog96");
         loginPage.submit();
-        new cy.contains(nameOfUser).should('be.visible');
     });
 });

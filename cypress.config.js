@@ -3,15 +3,16 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
     e2e: {
-        baseUrl: 'https://lunar-staging.webz.io/login',
+        baseUrl: 'https://lunar-staging.webz.io',
         setupNodeEvents(on, config) {
             // implement node event listeners here
         },
-        supportFile: false, // disable support file
+        supportFile: false,
+        projectId: "g2zyjw", // disable support file
     },
     env: {
-        email: 'test@example.com',
-        password: 'password123',
-        mainUserName: 'Test User'
+        email: 'almir@webz.io',
+        password: '19Rek@.river.bog96',
+        mainUserName: 'almir@webz.io'
     }
 });

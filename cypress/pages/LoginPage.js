@@ -1,16 +1,16 @@
 import BasePage from "./BasePage";
 
-class LoginPage {
+class LoginPage extends BasePage {
     visit() {
         cy.visit('/login');
     }
 
     enterUsername(username) {
-        cy.get('#username').type(username);
+        cy.get('#exampleInputEmail1').type(username);
     }
 
     enterPassword(password) {
-        cy.get('#password').type(password);
+        cy.get('#exampleInputPassword1').type(password);
     }
 
     submit() {
@@ -18,4 +18,4 @@ class LoginPage {
     }
 }
 
-export default LoginPage; 
+export default LoginPage;

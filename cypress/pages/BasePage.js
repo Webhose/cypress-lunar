@@ -1,6 +1,6 @@
 class BasePage {
     constructor() {
-      this.url = 'https://lunar-staging.webz.io/';
+      this.url = 'https://lunar-staging.webz.io';
     }
   
     visit() {
