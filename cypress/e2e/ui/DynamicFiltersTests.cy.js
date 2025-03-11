@@ -6,11 +6,13 @@ describe('Dynamic Filter Page Tests', () => {
   const dynamicFilterPage = new DynamicFilterPage();
   const loginPage = new LoginPage();
   const homepage = new Homepage();
+  const userName = Cypress.env('email');
+  const password = Cypress.env('password');
 
   beforeEach(() => {
     loginPage.visit();
-    loginPage.enterUsername("almir@webz.io");
-    loginPage.enterPassword("19Rek@.river.bog96");
+    loginPage.enterUsername(userName);
+    loginPage.enterPassword(password);
     loginPage.submit();
 
     dynamicFilterPage.visit();

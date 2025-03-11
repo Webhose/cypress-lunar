@@ -13,8 +13,8 @@ describe('Login Tests', () => {
     });
 
     it('should allow the user to login successfully', () => {
-        loginPage.enterUsername("almir@webz.io");
-        loginPage.enterPassword("19Rek@.river.bog96");
+        loginPage.enterUsername(userName);
+        loginPage.enterPassword(password);
         loginPage.submit();
     });
 });
