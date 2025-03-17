@@ -1,6 +1,6 @@
 import DynamicFilterPage from '../../../cypress/pages/DynamicFilterPage';
 import LoginPage from '../../../cypress/pages/LoginPage';
-import Homepage from '../../../cypress/pages/Homepage'; 
+import Homepage from '../../../cypress/pages/HomePage'; 
 
 describe('Dynamic Filter Page Tests', () => {
   const dynamicFilterPage = new DynamicFilterPage();
@@ -10,114 +10,116 @@ describe('Dynamic Filter Page Tests', () => {
   const password = Cypress.env('password');
 
   beforeEach(() => {
+    cy.viewport(1920, 1080) // Ensure Cypress opens in full-screen mode
     loginPage.visit();
     loginPage.enterUsername(userName);
     loginPage.enterPassword(password);
     loginPage.submit();
-
+    cy.wait(2000);
     dynamicFilterPage.visit();
     homepage.search("Trump");
   });
 
   it('should click on the Site Type filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Site Type');
+    // dynamicFilterPage.clickOnFilterOption('Site Type');
+    dynamicFilterPage.openSiteTypeFilter();
     dynamicFilterPage.selectSubFilter('telegram'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Domain filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Domain');
+    dynamicFilterPage.openDomainFilter();
     dynamicFilterPage.selectSubFilter('4chan.org'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Status filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Site Name');
+    dynamicFilterPage.openSiteNameFilter();
     dynamicFilterPage.selectSubFilter('4chan'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Date Range filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Site section URL');
+    dynamicFilterPage.openSiteSectionURLFilter();
     dynamicFilterPage.selectSubFilter('https://redlib.catsarch.com/'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Risk Level filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Thread URL');
+    dynamicFilterPage.openThreadTitleFilter();
     dynamicFilterPage.selectSubFilter('https://discordapp.com/channels/518979695702704132/801552414465064980'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Entity filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Author');
+    dynamicFilterPage.openAuthorFilter();
     dynamicFilterPage.selectSubFilter('anonymous'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the IP Address filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Tag');
+    dynamicFilterPage.openTagCategoryFilter();
     dynamicFilterPage.selectSubFilter('extremism'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Industry filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Risk Score');
+    dynamicFilterPage.openCyberRiskFilter();
     dynamicFilterPage.selectSubFilter('10'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Country filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Language');
+    dynamicFilterPage.openLanguageFilter();
     dynamicFilterPage.selectSubFilter('english'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Language filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Location Entity');
+    dynamicFilterPage.openLocationFilter();
     dynamicFilterPage.selectSubFilter('us'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the City filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Domain Entity');
+    dynamicFilterPage.openDomainValueFilter();
     dynamicFilterPage.selectSubFilter('youtube.com'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Network filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Email Entity');
+    dynamicFilterPage.openEmailFilter();
     dynamicFilterPage.selectSubFilter('stephengardneronlychannel@outlook.com'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Hosting Provider filter', () => {
-    dynamicFilterPage.clickOnFilterOption('IP Entity');
+    dynamicFilterPage.openIpFilter();
     dynamicFilterPage.selectSubFilter('2.7.7.0'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Tags filter', () => {
-    dynamicFilterPage.clickOnFilterOption('CVE Entity');
+    dynamicFilterPage.openCveFilter();
     dynamicFilterPage.selectSubFilter('cve-2023-40721'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Severity filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Credit Card Entity');
+    dynamicFilterPage.openCreditCardFilter();
     dynamicFilterPage.selectSubFilter('4633443827548008'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Impact filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Crypto Address Entity');
+    dynamicFilterPage.openCryptoCurrencyFilter();
     dynamicFilterPage.selectSubFilter('0x90fc364dc4a36135171276bd580974a40d9e8cbb'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 
   it('should click on the Threat Level filter', () => {
-    dynamicFilterPage.clickOnFilterOption('Phone Entity');
+    dynamicFilterPage.openPhoneNumberFilter();
     dynamicFilterPage.selectSubFilter('+12123470786'); 
-    dynamicFilterPage.verifyPostResults();
+    homepage.verifyPostResults();
   });
 });

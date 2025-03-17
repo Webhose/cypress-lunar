@@ -1,4 +1,6 @@
-class AlertsPage {
+import BasePage from "./BasePage";
+
+class AlertsPage extends BasePage{
     visit() {
         cy.visit('/alerts');
     }

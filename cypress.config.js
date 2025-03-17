@@ -13,6 +13,8 @@ module.exports = defineConfig({
     env: {
         email: 'almir@webz.io',
         password: '19Rek@.river.bog96',
-        mainUserName: 'almir@webz.io'
+        mainUserName: 'almir@webz.io',
+        viewportWidth: 1920,  
+        viewportHeight: 1080 
     }
 });

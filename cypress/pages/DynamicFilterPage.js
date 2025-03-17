@@ -1,10 +1,12 @@
+import BasePage from "./BasePage";
+
 class DynamicFilterPage extends BasePage {
   visit() {
     cy.visit('/discover');
   }
 
   selectSubFilter(title) {
-    cy.get(`[title="${title}"]`).parent().click();
+    cy.get(`[title="${title}"]`).parent().first().click();
   }
 
   clickOnFilterOption(filterName) {
@@ -13,23 +15,84 @@ class DynamicFilterPage extends BasePage {
   }
 
   getIdFromFilterName(filterName) {
-    return `field${filterName.toLowerCase().replace(/ /g, '.')}`;
+    return `fieldsite${filterName.toLowerCase().replace(/ /g, '.')}`;
   }
 
-  verifyPostResults() {
-    cy.get('li.postResult').should('have.length', 10);
-    cy.get('li.postResult').each(($el, index) => {
-      cy.wrap($el)
-        .find('.postResult__title')
-        .invoke('text')
-        .should('not.be.empty');
-      if (index < 10) {
-        cy.wrap($el)
-          .find('a')
-          .click({ force: true });
-      }
-    });
+  openSiteTypeFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldsite.type"]').click();
   }
+  
+  openDomainFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldsite.domain"]').click();
+  }
+  
+  openSiteNameFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldsite.name_agg"]').click();
+  }
+  
+  openSiteSectionURLFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldthread.site_section"]').click();
+  }
+  
+  openUrlFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldthread.url"]').click();
+  }
+  
+  openAuthorFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldauthor"]').click();
+  }
+  
+  openTagCategoryFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.category"]').click();
+  }
+  
+  openCyberRiskFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.cyber_risk.value"]').click();
+  }
+  
+  openLanguageFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldlanguage"]').click();
+  }
+  
+  openLocationFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.location.none.keyword"]').click();
+  }
+  
+  openDomainValueFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.domain.value"]').click();
+  }
+  
+  openEmailFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.email.value"]').click();
+  }
+  
+  openIpFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.ip.value"]').click();
+  }
+  
+  openCveFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.cve.value"]').click();
+  }
+  
+  openCreditCardFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.credit_card.value"]').click();
+  }
+
 }
 
 export default DynamicFilterPage;

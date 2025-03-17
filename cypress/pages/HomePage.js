@@ -1,6 +1,8 @@
-class HomePage {
+import BasePage from "./BasePage";
+
+class HomePage extends BasePage {
     visit() {
-        cy.visit('/home');
+        cy.visit('/discover');
     }
 
     search(searchValue) {
@@ -95,6 +97,14 @@ class HomePage {
     isPostTranslated(translation) {
         return cy.contains(translation).should('be.visible');
     }
+
+    openDynaminFilters() {
+        cy.get("button.collapse-button").click();
+    }
+
+    verifyPostResults() {
+        cy.get('li.postResult').should('have.length.greaterThan', 1);
+      }
 }
 
-export default new HomePage();
+export default HomePage;

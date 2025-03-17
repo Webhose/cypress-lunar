@@ -1,10 +1,13 @@
 import LoginPage from '../../../cypress/pages/LoginPage';
 import DomainRiskPage from '../../../cypress/pages/DomainRiskPage';
+import HomePage from '../../../cypress/pages/HomePage';
+
 
 const userName = Cypress.env('email');
 const password = Cypress.env('password');
 const loginPage = new LoginPage();
 const domainPage = new DomainRiskPage();
+const homePage = new HomePage();
 
 
 
@@ -15,12 +18,16 @@ const formatDate = () => {
 
 describe('Domain Risk Tests', () => { 
     beforeEach(() => {
-        loginPage.login(userName, password);
-        HomePage.navigateTodomainPage();
+      loginPage.visit();
+      loginPage.enterUsername(userName);
+      loginPage.enterPassword(password);
+      loginPage.submit();
+      cy.wait(2000);
+      domainPage.visit();
     });
 
     it('should add a domain', () => {
-        const domain = 'example.com';
+        const domain = 'xas.com';
         domainPage.addDomain(domain);
         
         domainPage.getNameOfLastAddedDomain().should('eq', domain);
@@ -36,7 +43,6 @@ describe('Domain Risk Tests', () => {
 
     it('should play the last added domain', () => {
         domainPage.playDomain();
-        // Additional validation logic if required
     });
 
     it('should delete the last added domain', () => {
@@ -63,19 +69,7 @@ describe('Domain Risk Tests', () => {
         domainPage.isErrorDisplayed().should('be.true');
     });
 
-describe("Verify Queries on Click", () => {
-
-  beforeEach(() => {
-    cy.session("login", () => {
-    loginPage.visit();
-    loginPage.enterUsername(userName);
-    loginPage.enterPassword(password);
-    loginPage.submit();
-    });
-  });
-
   it("Verifies query for Stealer Logs", () => {
-    domainPage.visit();
     domainPage.getNameOfLastAddedDomain().then((domain) => {
       const expectedQuery = `pii.domain_employee:${domain.trim()}`;
 
@@ -85,7 +79,6 @@ describe("Verify Queries on Click", () => {
   });
 
   it("Verifies query for Data Breaches", () => {
-    domainPage.visit();
     domainPage.getNameOfLastAddedDomain().then((domain) => {
       const expectedQuery = `pii.domain_employee:${domain.trim()}`;
 
@@ -95,7 +88,6 @@ describe("Verify Queries on Click", () => {
   });
 
   it("Verifies query for Dark Web", () => {
-    domainPage.visit();
     domainPage.getNameOfLastAddedDomain().then((domain) => {
       const expectedQuery = `enriched.email.value:*@${domain.trim()}`;
 
@@ -105,7 +97,6 @@ describe("Verify Queries on Click", () => {
   });
 
   it("Verifies query for Found in Stealer Logs", () => {
-    domainPage.visit();
     domainPage.getNameOfLastAddedDomain().then((domain) => {
       const expectedQuery = `pii.domain_client:${domain.trim()}`;
 
@@ -113,5 +104,5 @@ describe("Verify Queries on Click", () => {
       domainPage.verifyQuery(expectedQuery);
     });
   });
-});
+  
 });
