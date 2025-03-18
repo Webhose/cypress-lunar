@@ -43,6 +43,11 @@ npx cypress run --browser chrome
 ```
 Replace `chrome` with `firefox` or any supported browser.
 
+### Run Tests on Cloud 
+```sh
+ npx cypress run --record --key 5c9dca14-9862-419e-a992-ef100631b857
+```
+
 ## Writing Tests
 Test files are located in `cypress/e2e/` and follow this structure:
 ```js
