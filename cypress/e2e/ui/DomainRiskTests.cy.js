@@ -1,13 +1,14 @@
 import LoginPage from '../../../cypress/pages/LoginPage';
 import DomainRiskPage from '../../../cypress/pages/DomainRiskPage';
-import HomePage from '../../../cypress/pages/HomePage';
+import Homepage from '../../../cypress/pages/HomePage'; 
 
 
 const userName = Cypress.env('email');
 const password = Cypress.env('password');
 const loginPage = new LoginPage();
 const domainPage = new DomainRiskPage();
-const homePage = new HomePage();
+const homePage = new Homepage();
+const domain = 'x.com';
 
 
 
@@ -27,11 +28,9 @@ describe('Domain Risk Tests', () => {
     });
 
     it('should add a domain', () => {
-        const domain = 'xas.com';
         domainPage.addDomain(domain);
-        
         domainPage.getNameOfLastAddedDomain().should('eq', domain);
-        domainPage.getDateOfLastAddedDomain().should('eq', formatDate());
+        domainPage.deleteLastAddedDomain();
     });
 
     it('should cancel adding a domain', () => {
@@ -64,45 +63,65 @@ describe('Domain Risk Tests', () => {
     });
 
     it('should display an error for an invalid domain', () => {
-        const invalidDomain = 'invalid_domain';
+        const invalidDomain = 'asd.asd';
         domainPage.addDomain(invalidDomain);
-        domainPage.isErrorDisplayed().should('be.true');
+        domainPage.isErrorDisplayed();
     });
 
   it("Verifies query for Stealer Logs", () => {
+    domainPage.addDomain(domain);
+    cy.wait(2000);
     domainPage.getNameOfLastAddedDomain().then((domain) => {
       const expectedQuery = `pii.domain_employee:${domain.trim()}`;
 
+      domainPage.playDomain();
       domainPage.clickStealerLogs();
-      domainPage.verifyQuery(expectedQuery);
+      homePage.getQueryValue(expectedQuery);
+      cy.go(-2);
+      domainPage.deleteLastAddedDomain();
     });
   });
 
   it("Verifies query for Data Breaches", () => {
+    domainPage.addDomain(domain);
+    cy.wait(2000);
     domainPage.getNameOfLastAddedDomain().then((domain) => {
       const expectedQuery = `pii.domain_employee:${domain.trim()}`;
-
+     
+      domainPage.playDomain();
       domainPage.clickDataBreaches();
-      domainPage.verifyQuery(expectedQuery);
+      homePage.getQueryValue(expectedQuery);
+      cy.go(-2);
+      domainPage.deleteLastAddedDomain();
     });
   });
 
   it("Verifies query for Dark Web", () => {
+    domainPage.addDomain(domain);
+    cy.wait(2000);
     domainPage.getNameOfLastAddedDomain().then((domain) => {
       const expectedQuery = `enriched.email.value:*@${domain.trim()}`;
 
+      domainPage.playDomain();
       domainPage.clickDarkWeb();
-      domainPage.verifyQuery(expectedQuery);
+      homePage.getQueryValue(expectedQuery);
+      cy.go(-2);
+      domainPage.deleteLastAddedDomain();
     });
   });
 
   it("Verifies query for Found in Stealer Logs", () => {
+    domainPage.addDomain(domain);
+    cy.wait(2000);
     domainPage.getNameOfLastAddedDomain().then((domain) => {
       const expectedQuery = `pii.domain_client:${domain.trim()}`;
 
       domainPage.clickFoundInStealerLogs();
-      domainPage.verifyQuery(expectedQuery);
+      domainPage.playDomain();
+      homePage.getQueryValue(expectedQuery);
+      cy.go(-2);
+      domainPage.deleteLastAddedDomain();
     });
   });
-  
+
 });

@@ -1,21 +1,29 @@
 import BasePage from "./BasePage";
 
-class AlertsPage extends BasePage{
+class AlertsPage extends BasePage {
     visit() {
         cy.visit('/alerts');
     }
 
-    createAlert(query, name) {
-        cy.contains('Create Alert').click();
-        cy.get("textarea.step__input").click().type(query);
-        cy.contains('Next').click();
-        cy.get("input.step__input").click().type(name);
-        cy.contains('Next').click();
-        cy.contains('Done').click();
+    createAlert(name) {
+        cy.wait(2000);
+        cy.get("#new-alert-trigger", { timeout: 10000 }).click();
+        cy.get("#new-alert-next", { timeout: 10000 }).click();
+        cy.get('input[placeholder="Give your alert a name"]', { timeout: 10000 }).should('be.visible').type(name);
+        cy.get("#new-alert-next", { timeout: 10000 }).click();
+        cy.get("#new-alert-next", { timeout: 10000 }).click();
     }
 
     verifyAlertIsCreated(alertName) {
-        cy.contains(alertName).should('be.visible');
+        cy.contains('span', alertName, { timeout: 10000 }).should('be.visible');
+    }
+
+    deleteAlert() {
+        cy.get('svg[data-sentry-component="ThreeDotsIcons"]', { timeout: 10000 }).click();
+        cy.contains('button', 'Delete', { timeout: 10000 }).click();
+        cy.get('#warning-dialog-continue-button', { timeout: 10000 }).click();
+        cy.wait(2000);
     }
 }
-export default new AlertsPage();
+  
+export default AlertsPage;

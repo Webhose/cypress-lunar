@@ -104,7 +104,11 @@ class HomePage extends BasePage {
 
     verifyPostResults() {
         cy.get('li.postResult').should('have.length.greaterThan', 1);
-      }
+    }
+
+    navigateToAlerts() {
+        cy.get('#sidebar-Alerts', { timeout: 10000 }).should('be.visible').click();
+    }
 }
 
 export default HomePage;

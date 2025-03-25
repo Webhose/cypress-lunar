@@ -7,9 +7,9 @@ class DomainRiskPage extends BasePage {
     }
 
     addDomain(domain) {
-        cy.get('#dashboard-add-domain-main').click();
-        cy.get('#dashboard-right-panel-input').type(domain);
-        cy.get('#dashboard-right-panel-add-btn').click();
+        cy.get('#dashboard-add-domain-main', { timeout: 10000 }).click();  
+        cy.get('#dashboard-right-panel-input', { timeout: 10000 }).type(domain);  
+        cy.get('#dashboard-right-panel-add-btn', { timeout: 10000 }).click(); 
     }
 
     cancelAddDomain(domain) {
@@ -39,7 +39,8 @@ class DomainRiskPage extends BasePage {
     }
 
     isErrorDisplayed() {
-        return cy.contains('Invalid Domain').should('be.visible');
+        return cy.contains('span', 'Invalid Domain')
+        .should('be.visible');
     }
 
     searchDomain(domain) {
@@ -63,6 +64,22 @@ class DomainRiskPage extends BasePage {
     clickSection(section) {
         cy.get(section).click();
     }
+
+    clickDataBreaches() {
+        cy.contains('p', 'Data Breaches', { timeout: 10000 }).click();
+      }
+    
+      clickStealerLogs() {
+        cy.contains('p', 'Stealer Logs', { timeout: 10000 }).click();
+      }
+    
+      clickDarkWeb() {
+        cy.contains('p', 'Dark Web', { timeout: 10000 }).click();
+      }
+    
+      clickFoundInStealerLogs() {
+        cy.contains('p', 'Found in stealer logs', { timeout: 10000 }).click();
+      }
 
 }
 export default DomainRiskPage;

@@ -1,14 +1,13 @@
 import DynamicFilterPage from '../../../cypress/pages/DynamicFilterPage';
 import LoginPage from '../../../cypress/pages/LoginPage';
 import Homepage from '../../../cypress/pages/HomePage'; 
+const dynamicFilterPage = new DynamicFilterPage();
+const loginPage = new LoginPage();
+const homepage = new Homepage();
+const userName = Cypress.env('email');
+const password = Cypress.env('password');
 
 describe('Dynamic Filter Page Tests', () => {
-  const dynamicFilterPage = new DynamicFilterPage();
-  const loginPage = new LoginPage();
-  const homepage = new Homepage();
-  const userName = Cypress.env('email');
-  const password = Cypress.env('password');
-
   beforeEach(() => {
     cy.viewport(1920, 1080) // Ensure Cypress opens in full-screen mode
     loginPage.visit();

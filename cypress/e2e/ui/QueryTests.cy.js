@@ -43,7 +43,8 @@ describe('Query Tests', () => {
             homePage.search(`${query}${data}`);
             homePage.verifyPostResults();
         });
-    });    
+    });
+
 
     it('verifies that the app is not crashing when searching invalid values', () => {
         homePage.performSearch('easdla,dsdasl]');
