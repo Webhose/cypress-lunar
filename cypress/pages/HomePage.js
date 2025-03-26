@@ -109,6 +109,43 @@ class HomePage extends BasePage {
     navigateToAlerts() {
         cy.get('#sidebar-Alerts', { timeout: 10000 }).should('be.visible').click();
     }
+
+    getTemplateQuery() {
+        let template = '';
+    
+        cy.get("div h4:contains('Preview') + span", { timeout: 5000 })
+          .should('be.visible')
+          .invoke('text')
+          .then((text) => {
+              template = text.trim();
+              expect(template).not.to.be.empty;
+          });
+    
+        return cy.wrap(template);
+    }
+
+    getTotalResultsNumber() {
+        return cy.get("div.results__headerRight.gap-3", { timeout: 5000 })
+            .should('be.visible')
+            .invoke('text')
+            .then((text) => {
+                const match = text.match(/of (\d{1,3}(,\d{3})*)(\.\d+)?/);
+                if (match) {
+                    const count = parseInt(match[1].replace(/,/g, ""), 10);
+                    cy.log("Number after 'of': " + count);
+                    return count;
+                } else {
+                    cy.log("Pattern not found in the text.");
+                    return 0;
+                }
+            });
+    }
+
+    verifyThatNoResultsMessageIsDisplayed() {
+        return cy.contains('h4', 'No results found. Try again later or refine your query.', { timeout: 5000 })
+            .should('be.visible');
+    }    
+    
 }
 
 export default HomePage;

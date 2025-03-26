@@ -22,7 +22,7 @@ class AlertsPage extends BasePage {
         cy.get('svg[data-sentry-component="ThreeDotsIcons"]', { timeout: 10000 }).click();
         cy.contains('button', 'Delete', { timeout: 10000 }).click();
         cy.get('#warning-dialog-continue-button', { timeout: 10000 }).click();
-        cy.wait(2000);
+        cy.wait(2000);w
     }
 }
   
