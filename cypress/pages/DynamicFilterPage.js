@@ -93,6 +93,21 @@ class DynamicFilterPage extends BasePage {
     cy.get('[id="fieldenriched.credit_card.value"]').click();
   }
 
+  openPhoneNumberFilter() {
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.phone.value"]').click();
+  }
+
+  openCryptoCurrencyFilter() {  
+    cy.wait(1000);
+    cy.get('[id="fieldenriched.wallet_id.value"]').click();
+  }
+
+  waitForDynamicFiltersToLoad() {
+    cy.get('#fieldsite\\.type', { timeout: 10000 }) // Wait up to 10s
+      .should('be.visible');
+  }
+  
 }
 
 export default DynamicFilterPage;

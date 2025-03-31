@@ -34,7 +34,9 @@ describe('Query Tests', () => {
         { name: 'Enriched CVE', query: 'enriched.cve.value:', data: '*' },
         { name: 'Enriched Location', query: 'enriched.location.value:', data: '*' },
         { name: 'Enriched Phone', query: 'enriched.phone.value:', data: '*' },
-        { name: 'SSN', query: 'enriched.ssn.value:', data: '*' }
+        { name: 'SSN', query: 'enriched.ssn.value:', data: '*' },
+        { name: 'pii domain', query: 'pii.domain_employee:', data: 'dell.com' },
+        { name: 'pii client', query: 'pii.domain_client:', data: 'dell.com' },
     ];
 
     searchTests.forEach(({ name, query, data }) => {
