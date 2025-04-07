@@ -73,17 +73,19 @@ class HomePage extends BasePage {
     selectRandomTemplate() {
         cy.get('.template.pointer').then(($templates) => {
             const randomIndex = Math.floor(Math.random() * $templates.length);
-            cy.wrap($templates[randomIndex]).click();
+            cy.wrap($templates).eq(randomIndex).click();
         });
-    }
+    }    
 
     runTemplate() {
         cy.contains('Run Template').click();
     }
 
     getQueryValue() {
-        return cy.get("textarea[placeholder='Search']").invoke('text');
-    }
+        cy.get("textarea[placeholder='Search']").click();
+        cy.wait(2000);
+        return cy.get("textarea[placeholder='Search']").invoke('val');
+    }    
 
     verifyAdditionalInfoIsDisplayed() {
         cy.get('.table-row .pointer').first().click();
@@ -109,20 +111,18 @@ class HomePage extends BasePage {
     navigateToAlerts() {
         cy.get('#sidebar-Alerts', { timeout: 10000 }).should('be.visible').click();
     }
-
+    
     getTemplateQuery() {
-        let template = '';
-    
-        cy.get("div h4:contains('Preview') + span", { timeout: 5000 })
-          .should('be.visible')
-          .invoke('text')
-          .then((text) => {
-              template = text.trim();
-              expect(template).not.to.be.empty;
-          });
-    
-        return cy.wrap(template);
+        return cy.get("div h4:contains('Preview') + span", { timeout: 5000 })
+            .should('be.visible')
+            .invoke('text')
+            .then((text) => {
+                const template = text.trim();
+                expect(template).not.to.be.empty; // Ensure it's not empty
+                return template; // Ensure the text is returned correctly
+            });
     }
+    
 
     getTotalResultsNumber() {
         return cy.get("div.results__headerRight.gap-3", { timeout: 5000 })
@@ -145,7 +145,28 @@ class HomePage extends BasePage {
         return cy.contains('h4', 'No results found. Try again later or refine your query.', { timeout: 5000 })
             .should('be.visible');
     }    
-    
+   
+    getSearchTotalResults() {
+        return cy.get('#search-total-results-counter', { timeout: 10000 })
+          .invoke('text')
+          .then((text) => {
+            const trimmedText = text.trim();
+            const firstLine = trimmedText.split('\n')[0];
+            const match = firstLine.match(/of\s([\d,]+)/i);
+            if (match && match[1]) {
+              const total = parseInt(match[1].replace(/,/g, ''), 10);
+              cy.log(`Total search results on home: ${total}`);
+              return total;
+            } else {
+              throw new Error('Could not extract total from text: ' + firstLine);
+            }
+          });
+    }
+      
+    openNotification(){
+        cy.get('#notifications-sheet-trigger', { timeout: 10000 })
+          .click();
+    }
 }
 
 export default HomePage;

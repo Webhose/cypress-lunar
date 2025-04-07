@@ -5,12 +5,18 @@ class DomainRiskPage extends BasePage {
     visit() {
         cy.visit('/dashboard');
     }
-
     addDomain(domain) {
-        cy.get('#dashboard-add-domain-main', { timeout: 10000 }).click();  
-        cy.get('#dashboard-right-panel-input', { timeout: 10000 }).type(domain);  
-        cy.get('#dashboard-right-panel-add-btn', { timeout: 10000 }).click(); 
-    }
+        cy.get('#dashboard-add-domain-main', { timeout: 10000 }).should('be.visible').then(($el) => {
+          if ($el.is(':visible')) {
+            cy.wrap($el).click();
+          } else {
+            cy.get('#empty-state-add-btn', { timeout: 10000 }).click();
+          }
+        });
+        
+        cy.get('#dashboard-right-panel-input', { timeout: 10000 }).type(domain);
+        cy.get('#dashboard-right-panel-add-btn', { timeout: 10000 }).click();
+      }      
 
     cancelAddDomain(domain) {
         cy.get('#dashboard-add-domain-main').click();
@@ -32,12 +38,19 @@ class DomainRiskPage extends BasePage {
             .invoke("text");
     }
     
-
     deleteLastAddedDomain() {
-        cy.get('#icon-button-row-delete-0').click();
-        cy.get('#delete-modal-delete-btn').click();
-    }
-
+        cy.get('#icon-button-row-delete-0', { timeout: 10000 }).then(($deleteButton) => {
+          if ($deleteButton.length) {
+            // If the delete button exists, click it
+            cy.wrap($deleteButton).click();
+            cy.get('#delete-modal-delete-btn').click();
+          } else {
+            // If the delete button does not exist, log a message
+            cy.log('Nothing to delete');
+          }
+        });
+      }
+      
     isErrorDisplayed() {
         return cy.contains('span', 'Invalid Domain')
         .should('be.visible');

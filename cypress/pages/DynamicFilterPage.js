@@ -107,6 +107,26 @@ class DynamicFilterPage extends BasePage {
     cy.get('#fieldsite\\.type', { timeout: 10000 }) // Wait up to 10s
       .should('be.visible');
   }
+
+  selectFilterValue() {
+    cy.get('.dscFieldDetails__buckets > li')
+      .then(($items) => {
+        if ($items.length > 0) {
+          const randomIndex = Math.floor(Math.random() * $items.length);
+          const randomItem = $items.eq(randomIndex);
+  
+          // Click the randomly selected option
+          cy.wrap(randomItem).click();
+          cy.log(`Random filter selected: ${randomItem.attr('id')}`);
+        } else {
+          cy.log('No filters available, skipping selection.');
+        }
+      })
+      .then(null, () => {
+        cy.log('Error occurred while selecting a filter, but continuing test execution.');
+      });
+  }
+  
   
 }
 

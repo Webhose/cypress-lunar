@@ -29,6 +29,7 @@ describe('Domain Risk Tests', () => {
 
     it('should add a domain', () => {
         domainPage.addDomain(domain);
+        cy.wait(2000);
         domainPage.getNameOfLastAddedDomain().should('eq', domain);
         domainPage.deleteLastAddedDomain();
     });
@@ -116,8 +117,9 @@ describe('Domain Risk Tests', () => {
     domainPage.getNameOfLastAddedDomain().then((domain) => {
       const expectedQuery = `pii.domain_client:${domain.trim()}`;
 
-      domainPage.clickFoundInStealerLogs();
       domainPage.playDomain();
+      domainPage.clickFoundInStealerLogs();
+      cy.wait(2000);
       homePage.getQueryValue(expectedQuery);
       cy.go(-2);
       domainPage.deleteLastAddedDomain();

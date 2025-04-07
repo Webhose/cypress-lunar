@@ -65,10 +65,25 @@ describe('Query Tests', () => {
     
 
     it('verifies that user can use templates', () => {
+        cy.wait(2000);
         homePage.navigateToLibrary();
         homePage.selectRandomTemplate();
+        cy.wait(1000);
+    
         homePage.getTemplateQuery().then(templateValue => {
-            homePage.getQueryValue().should('eq', templateValue);
+            cy.log('Expected Query Value:', templateValue);
+            console.log('Expected Query Value:', templateValue); // Logs to browser console
+    
+            homePage.runTemplate();
+    
+            homePage.getQueryValue().then(actualValue => {
+                cy.log('Actual Query Value:', actualValue);
+                console.log('Actual Query Value:', actualValue); // Logs to browser console
+    
+                expect(actualValue).to.eq(templateValue);
+            });
         });
     });
+    
+    
 });
